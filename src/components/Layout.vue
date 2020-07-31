@@ -16,7 +16,7 @@
   height: 100vh;
 }
 .content {
-  border: 2px solid blue;
+  
   overflow: auto;
   flex-grow: 1;
 }
