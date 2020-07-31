@@ -1,0 +1,23 @@
+<template>
+ <div class="nav-wrapper">
+    <div class="content">
+     <slot/>
+    </div>
+    <Nav />
+  </div>
+</template>
+
+
+
+<style lang="scss" scoped>
+.nav-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+.content {
+  border: 2px solid blue;
+  overflow: auto;
+  flex-grow: 1;
+}
+</style>
