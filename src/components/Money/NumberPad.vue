@@ -21,45 +21,48 @@
 </template>
 
 <script lang='ts'>
-import Vue from 'vue';
-import {Component, Prop} from 'vue-property-decorator';
+import Vue from "vue";
+import { Component, Prop } from "vue-property-decorator";
 
 @Component
 export default class NumberPad extends Vue {
-  
   @Prop() readonly value!: number;
   output = this.value.toString();
 
-
-  inputContent(event: MouseEvent){
-    const button = (event.target as HTMLButtonElement);//强行声明是非空按钮元素
+  inputContent(event: MouseEvent) {
+    const button = event.target as HTMLButtonElement; //强行声明是非空按钮元素
     const input = button.textContent;
 
-    if(this.output === '0' && input){//初始状态
-      if( input!=='.'){
+    if (this.output === "0" && input) {
+      //初始状态
+      if (input !== ".") {
         this.output = input;
-      }
-      else this.output += input; 
-    }
-    else if(this.output.length>0){
-      if(input === '.' && this.output.indexOf('.')>=0){return;}//不许出现第二个小数点
+      } else this.output += input;
+    } else if (this.output.length > 0) {
+      if (input === "." && this.output.indexOf(".") >= 0) {
+        return;
+      } //不许出现第二个小数点
       else this.output = this.output + input;
     }
   }
-  remove(){
-    if (this.output.length > 1){ 
-      
+  remove() {
+    if (this.output.length > 1) {
       this.output = this.output.slice(0, -1);
-      }
-    else this.output = '0';
+    } else this.output = "0";
   }
-  clear(){
-    this.output = '0'
+  clear() {
+    this.output = "0";
   }
-   ok(){
-     this.$emit('update:value',this.output)
-   }
- 
+  ok() {
+    if (this.output === "0") {
+      return;
+    } else {
+      window.alert('已保存')
+      this.$emit("update:value", this.output);
+      this.$emit("submit", this.output);
+      this.output = "0";
+    }
+  }
 }
 </script>
 
