@@ -24,12 +24,18 @@ type Record = {
   notes: string;
   types: string;
   amounts: number;
+  createdAt?: Date;
 };
-
+// const recordList: Record[] = JSON.parse(
+//   window.localStorage.getItem("recordList") || "[]"
+// );
 @Component({
   components: { Tags, Notes, Types, NumberPad }
 })
 export default class Money extends Vue {
+  recordList: Record[] = JSON.parse(
+  window.localStorage.getItem("recordList") || "[]"
+);
   record: Record = {
     currentTags: ["衣", "食", "住", "行"], //这是可供选择的标签
     tags: [],
@@ -37,9 +43,10 @@ export default class Money extends Vue {
     types: "-",
     amounts: 0
   };
-  recordList: Record[] = [];
+
   saveRecord() {
-    const record2 = JSON.parse(JSON.stringify(this.record)); //深拷贝一个副本
+    const record2: Record = JSON.parse(JSON.stringify(this.record)); //深拷贝一个副本
+    record2.createdAt = new Date();
     this.recordList.push(record2);
     console.log(this.recordList);
   }
