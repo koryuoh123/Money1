@@ -1,34 +1,61 @@
 <template>
   <div class="numberPad">
-    <div class="output">100</div>
+    <div class="output">{{output}}</div>
     <div class="buttons">
       <button @click="inputContent">1</button>
-      <button>2</button>
-      <button>3</button>
-      <button>删除</button>
-      <button>4</button>
-      <button>5</button>
-      <button>6</button>
-      <button>清空</button>
-      <button>7</button>
-      <button>8</button>
-      <button>9</button>
-      <button class="ok">OK</button>
-      <button class="zero">0</button>
-      <button>.</button>
+      <button @click="inputContent">2</button>
+      <button @click="inputContent">3</button>
+      <button @click="remove">删除</button>
+      <button @click="inputContent">4</button>
+      <button @click="inputContent">5</button>
+      <button @click="inputContent">6</button>
+      <button @click="clear">清空</button>
+      <button @click="inputContent">7</button>
+      <button @click="inputContent">8</button>
+      <button @click="inputContent">9</button>
+      <button class="ok" @click="ok">OK</button>
+      <button class="zero" @click="inputContent">0</button>
+      <button @click="inputContent">.</button>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  name: "NumberPad",
-  methods:{
-  inputContent(e){
-    console.log(e)
+<script lang='ts'>
+import Vue from 'vue';
+import {Component, Prop} from 'vue-property-decorator';
+
+@Component
+export default class NumberPad extends Vue {
+  output = '0';
+
+  inputContent(event: MouseEvent){
+    const button = (event.target as HTMLButtonElement);//强行声明是非空按钮元素
+    const input = button.textContent;
+
+    if(this.output === '0' && input){//初始状态
+      if( input!=='.'){
+        this.output = input;
+      }
+      else this.output += input; 
+    }
+    else if(this.output.length>0){
+      if(input === '.' && this.output.indexOf('.')>=0){return;}//不许出现第二个小数点
+      else this.output = this.output + input;
+    }
   }
+  remove(){
+    if (this.output.length > 1){ 
+      
+      this.output = this.output.slice(0, -1);
+      }
+    else this.output = '0';
   }
-};
+  clear(){
+    this.output = '0'
+  }
+   ok(){console.log('等隔壁页面实现')}
+ 
+}
 </script>
 
 <style lang="scss" scoped>
@@ -41,6 +68,7 @@ export default {
     font-family: Consolas, monospace; //output显示的字体是等宽编程字体
     padding: 9px 16px;
     text-align: right; //将100放到最右边
+    height: 72px;
   }
   .buttons {
     @extend %clearFix;
