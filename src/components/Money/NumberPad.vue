@@ -2,7 +2,7 @@
   <div class="numberPad">
     <div class="output">100</div>
     <div class="buttons">
-      <button>1</button>
+      <button @click="inputContent">1</button>
       <button>2</button>
       <button>3</button>
       <button>删除</button>
@@ -22,7 +22,12 @@
 
 <script>
 export default {
-  name: "NumberPad"
+  name: "NumberPad",
+  methods:{
+  inputContent(e){
+    console.log(e)
+  }
+  }
 };
 </script>
 
