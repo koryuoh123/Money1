@@ -36,12 +36,12 @@
           justify-content: center;
           align-items: center;
           flex-direction: column;
-           margin-bottom: 5px;
+           margin-bottom: 2px;
       }
        .icon{
           width: 32px;
           height: 32px;
-          margin-top:8px;
+          margin-top:3px;
       }
       > .item.selected{
           color:grey;

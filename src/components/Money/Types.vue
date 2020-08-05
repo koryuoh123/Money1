@@ -2,6 +2,7 @@
   <ul class="types">
     <li :class="type === '-' && 'selected'" @click="selectType('-')">支出</li>
     <li :class="type ==='+' && 'selected'" @click="selectType('+')">收入</li>
+
   </ul>
 </template>
 
@@ -29,7 +30,7 @@ export default class Types extends Vue {
   > li {
     text-align: center;
     font-size: 24px;
-    height: 64px;
+    height: 50px;
     width: 50%;
     //下面三行代码是使text居中
     display: flex;

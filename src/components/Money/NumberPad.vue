@@ -64,11 +64,11 @@ export default class NumberPad extends Vue {
   .output {
     @extend %clearFix;
     @extend %innerShadow;
-    font-size: 36px;
+    font-size: 28px;
     font-family: Consolas, monospace; //output显示的字体是等宽编程字体
     padding: 9px 16px;
     text-align: right; //将100放到最右边
-    height: 72px;
+    height: 58px;
   }
   .buttons {
     @extend %clearFix;
