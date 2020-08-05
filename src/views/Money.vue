@@ -1,10 +1,10 @@
 <template>
   <Layout class-prefix="layout">
-{{Record}}
-    <NumberPad :value.sync="Record.amounts"/>
-    <Types :value.sync="Record.types"/>
-    <Notes :value.sync="Record.notes"/>
-    <Tags :dataSource.sync="Record.currentTags" :value.sync="Record.tags"/>
+    {{Record}}
+    <NumberPad :value.sync="record.amounts" />
+    <Types :value.sync="record.types" />
+    <Notes :value.sync="record.notes" />
+    <Tags :dataSource.sync="record.currentTags" :value.sync="Record.tags" />
   </Layout>
 </template>
 
@@ -30,18 +30,13 @@ type Record = {
   components: { Tags, Notes, Types, NumberPad }
 })
 export default class Money extends Vue {
-
-  
-
-  Record = {
-    currentTags : ["衣", "食", "住", "行"],//这是可供选择的标签
+  record: Record = {
+    currentTags: ["衣", "食", "住", "行"], //这是可供选择的标签
     tags: [],
     notes: "",
     types: "-",
     amounts: 0
   };
-
-
 }
 </script>
 
