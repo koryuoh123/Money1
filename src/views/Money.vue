@@ -23,16 +23,15 @@ import recordListModel from "@/models/recordListModel.ts";
 import tagListModel from "@/models/tagListModel";
 
 const localRecordList = recordListModel.fetch();
-const tagList = tagListModel.fetch();
+
 
 @Component({
   components: { Tags, FormItem, Types, NumberPad }
 })
 export default class Money extends Vue {
   recordList: RecordItem[] = localRecordList;
-  tags = tagList;
+  tags = window.tagList;
   record: RecordItem = {
-    currentTags: ["衣", "食", "住", "行"], //这是可供选择的标签
     tags: [],
     notes: "",
     types: "-",
@@ -40,14 +39,11 @@ export default class Money extends Vue {
   };
 
   saveRecord() {
-    const record2: RecordItem = recordListModel.clone(this.record);
-    record2.createdAt = new Date();
-    this.recordList.push(record2);
-    console.log(this.recordList);
+    recordListModel.create(this.record)
   }
   @Watch("recordList")
   onRecordListChange() {
-    recordListModel.save(this.recordList);
+    recordListModel.save();
   }
 }
 </script>
