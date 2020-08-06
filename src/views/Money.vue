@@ -4,7 +4,7 @@
     <NumberPad :value.sync="record.amounts" @submit="saveRecord" />
     <Types :value.sync="record.types" />
     <div class="notes">
-      <FormItem field-name="备注" placeholder="在这里输入备注" @update:value="onUpdateNotes" />
+      <FormItem field-name="备注" placeholder="在这里输入备注" :value.sync="record.notes" />
     </div>
     <Tags :dataSource.sync="tags" :value.sync="record.tags" />
   </Layout>
