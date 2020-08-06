@@ -9,7 +9,7 @@
         :key="tag.id"
         @click="toggle(tag)"
         :class="{selected: selectedTags.indexOf(tag)>=0}"
-      >{{tag}}</li>
+      >{{tag.name}}</li>
     </ul>
   </div>
 </template>
@@ -20,8 +20,8 @@ import { Component, Prop } from "vue-property-decorator";
 import tagListModel from "@/models/tagListModel";
 @Component
 export default class Tags extends Vue {
-  // @Prop() readonly dataSource: string[] | undefined; 
-  tags = window.tagList;//我自己修复了记账标签两个页面分别新建带来的信息不同步的bug
+  // @Prop() readonly dataSource: string[] | undefined;
+  tags = window.tagList; //我自己修复了记账标签两个页面分别新建带来的信息不同步的bug
   selectedTags: string[] = [];
 
   toggle(tag: string) {

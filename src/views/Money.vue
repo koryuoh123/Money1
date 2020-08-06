@@ -27,7 +27,7 @@ const localRecordList = recordListModel.fetch();
   components: { Tags, FormItem, Types, NumberPad }
 })
 export default class Money extends Vue {
-  recordList: RecordItem[] = localRecordList;
+  recordList = window.recordList;
   tags = window.tagList;
   record: RecordItem = {
     tags: [],
@@ -37,12 +37,9 @@ export default class Money extends Vue {
   };
 
   saveRecord() {
-    recordListModel.create(this.record);
+    window.createRecord(this.record);
   }
-  @Watch("recordList")
-  onRecordListChange() {
-    recordListModel.save();
-  }
+
 }
 </script>
 
