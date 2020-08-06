@@ -1,9 +1,9 @@
 <template>
   <Layout class-prefix="layout">
-    {{tags}}
+    {{record}}
     <NumberPad :value.sync="record.amounts" @submit="saveRecord" />
     <Types :value.sync="record.types" />
-    <Notes :value.sync="record.notes" />
+    <Notes field-name="备注" placeholder="在这里输入备注" :value.sync="record.Notes" />
     <Tags :dataSource.sync="tags" :value.sync="record.tags" />
   </Layout>
 </template>
