@@ -5,11 +5,11 @@
     </div>
     <ul class="current">
       <li
-        v-for="tag in dataSource"
+        v-for="tag in tags"
         :key="tag.id"
         @click="toggle(tag)"
         :class="{selected: selectedTags.indexOf(tag)>=0}"
-      >{{tag.name}}</li>
+      >{{tag}}</li>
     </ul>
   </div>
 </template>
@@ -17,10 +17,11 @@
 <script lang='ts'>
 import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
-import tagListModel from '@/models/tagListModel';
+import tagListModel from "@/models/tagListModel";
 @Component
 export default class Tags extends Vue {
-  @Prop() readonly dataSource: string[] | undefined;
+  // @Prop() readonly dataSource: string[] | undefined; 
+  tags = window.tagList;//我自己修复了记账标签两个页面分别新建带来的信息不同步的bug
   selectedTags: string[] = [];
 
   toggle(tag: string) {
@@ -39,9 +40,8 @@ export default class Tags extends Vue {
       window.alert("标签名不能为空");
     } else if (name === null) {
       return;
-    } else if (this.dataSource) {
-      this.$emit("update:dataSource", [...this.dataSource, name]);
-      tagListModel.create(name);
+    } else if (this.tags) {
+      window.createTag(name);
     }
   }
 }

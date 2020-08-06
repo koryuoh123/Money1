@@ -17,43 +17,37 @@
    <script lang='ts'>
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
-import tagListModel from "@/models/tagListModel";
+
 import FormItem from "@/components/Money/FormItem.vue";
 import Button from "@/components/Button.vue";
 @Component({
   components: { Button, FormItem }
 })
 export default class EditLabel extends Vue {
-  tag?: {id: string; name: string} = undefined;
+  tag?: { id: string; name: string } = undefined;
 
   created() {
-    const id = this.$route.params.id;//route.params.id就是路由里面的:id
-    tagListModel.fetch();
-    const tags = tagListModel.data;
-    const tag = tags.filter(t => t.id === id)[0]; //过滤出位序和路由id一致的选项
-    if (tag) {
-      this.tag = tag;
-    } else {
+    this.tag = window.findTag(this.$route.params.id);
+    if (!this.tag) {
       this.$router.replace("/404");
     }
   }
 
-update(name: string){
-  if(this.tag){
-    tagListModel.update(this.tag.id, name)
-  }
-}
-remove(){
-  if(this.tag){
-    if(tagListModel.remove(this.tag.id)){
-      this.$router.back()
+  update(name: string) {
+    if (this.tag) {
+      window.updateTag(this.tag.id, name);
     }
   }
-}
-goBack(){
-  this.$router.back();
-}
-
+  remove() {
+    if (this.tag) {
+      if (window.removeTag(this.tag.id)) {
+        this.$router.back();
+      } else window.alert("删除失败");
+    }
+  }
+  goBack() {
+    this.$router.back();
+  }
 }
 </script>
 
