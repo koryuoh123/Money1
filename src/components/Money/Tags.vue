@@ -17,7 +17,7 @@
 <script lang='ts'>
 import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
-
+import tagListModel from '@/models/tagListModel';
 @Component
 export default class Tags extends Vue {
   @Prop() readonly dataSource: string[] | undefined;
@@ -41,6 +41,7 @@ export default class Tags extends Vue {
       return;
     } else if (this.dataSource) {
       this.$emit("update:dataSource", [...this.dataSource, name]);
+      tagListModel.create(name);
     }
   }
 }

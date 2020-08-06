@@ -1,10 +1,12 @@
 const localStorageKeyName = 'tagList';
+
 type TagListModel = {
   data: string[];
   fetch: () => string[];
   create: (name: string) => 'success' | 'duplicated'; // 联合类型
   save: () => void;
 }
+
 const tagListModel: TagListModel = {
   data: [],
   fetch() {

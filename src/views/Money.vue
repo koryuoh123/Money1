@@ -1,10 +1,10 @@
 <template>
   <Layout class-prefix="layout">
-    {{record}}
+    {{tags}}
     <NumberPad :value.sync="record.amounts" @submit="saveRecord" />
     <Types :value.sync="record.types" />
     <Notes :value.sync="record.notes" />
-    <Tags :dataSource.sync="record.currentTags" :value.sync="record.tags" />
+    <Tags :dataSource.sync="tags" :value.sync="record.tags" />
   </Layout>
 </template>
 
@@ -18,17 +18,19 @@ import Notes from "@/components/Money/Notes.vue";
 import Types from "@/components/Money/Types.vue";
 import NumberPad from "@/components/Money/NumberPad.vue";
 import recordListModel from '@/models/recordListModel.ts';
-  import tagListModel from '@/models/tagListModel';
-const recordList = recordListModel.fetch();
- const tagList = tagListModel.fetch();
+import tagListModel from '@/models/tagListModel';
+
+const localRecordList = recordListModel.fetch();
+const tagList = tagListModel.fetch();
+
 @Component({
   components: { Tags, Notes, Types, NumberPad }
 })
 export default class Money extends Vue {
-  recordList: RecordItem[] = recordList
-  
+  recordList: RecordItem[] = localRecordList
+  tags = tagList;
   record: RecordItem = {
-    currentTags: tagList, //这是可供选择的标签
+    currentTags: ["衣", "食", "住", "行"], //这是可供选择的标签
     tags: [],
     notes: "",
     types: "-",
@@ -45,6 +47,8 @@ export default class Money extends Vue {
   onRecordListChange() {
     recordListModel.save(this.recordList)
   }
+  @Watch("tagList")
+  ontagsChange(){tagListModel.create(name);}
 }
 </script>
 
