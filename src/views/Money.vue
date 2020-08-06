@@ -17,15 +17,9 @@ import Tags from "@/components/Money/Tags.vue";
 import Notes from "@/components/Money/Notes.vue";
 import Types from "@/components/Money/Types.vue";
 import NumberPad from "@/components/Money/NumberPad.vue";
+import model from '@/model';
 
-type Record = {
-  currentTags: string[];
-  tags: string[];
-  notes: string;
-  types: string;
-  amounts: number;
-  createdAt?: Date;
-};
+const recordList = model.fetch();
 // const recordList: Record[] = JSON.parse(
 //   window.localStorage.getItem("recordList") || "[]"
 // );
@@ -33,10 +27,9 @@ type Record = {
   components: { Tags, Notes, Types, NumberPad }
 })
 export default class Money extends Vue {
-  recordList: Record[] = JSON.parse(
-  window.localStorage.getItem("recordList") || "[]"
-);
-  record: Record = {
+  recordList: RecordItem[] = recordList
+  
+  record: RecordItem = {
     currentTags: ["衣", "食", "住", "行"], //这是可供选择的标签
     tags: [],
     notes: "",
@@ -45,14 +38,14 @@ export default class Money extends Vue {
   };
 
   saveRecord() {
-    const record2: Record = JSON.parse(JSON.stringify(this.record)); //深拷贝一个副本
+    const record2: RecordItem = model.clone(this.record)
     record2.createdAt = new Date();
     this.recordList.push(record2);
     console.log(this.recordList);
   }
   @Watch("recordList")
   onRecordListChange() {
-    window.localStorage.setItem("recordList", JSON.stringify(this.recordList));
+    model.save(this.recordList)
   }
 }
 </script>
