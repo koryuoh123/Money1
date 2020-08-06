@@ -17,8 +17,8 @@ import Tags from "@/components/Money/Tags.vue";
 import Notes from "@/components/Money/Notes.vue";
 import Types from "@/components/Money/Types.vue";
 import NumberPad from "@/components/Money/NumberPad.vue";
-import recordListModel from '@/models/recordListModel.ts';
-import tagListModel from '@/models/tagListModel';
+import recordListModel from "@/models/recordListModel.ts";
+import tagListModel from "@/models/tagListModel";
 
 const localRecordList = recordListModel.fetch();
 const tagList = tagListModel.fetch();
@@ -27,7 +27,7 @@ const tagList = tagListModel.fetch();
   components: { Tags, Notes, Types, NumberPad }
 })
 export default class Money extends Vue {
-  recordList: RecordItem[] = localRecordList
+  recordList: RecordItem[] = localRecordList;
   tags = tagList;
   record: RecordItem = {
     currentTags: ["衣", "食", "住", "行"], //这是可供选择的标签
@@ -38,17 +38,15 @@ export default class Money extends Vue {
   };
 
   saveRecord() {
-    const record2: RecordItem = recordListModel.clone(this.record)
+    const record2: RecordItem = recordListModel.clone(this.record);
     record2.createdAt = new Date();
     this.recordList.push(record2);
     console.log(this.recordList);
   }
   @Watch("recordList")
   onRecordListChange() {
-    recordListModel.save(this.recordList)
+    recordListModel.save(this.recordList);
   }
-  @Watch("tagList")
-  ontagsChange(){tagListModel.create(name);}
 }
 </script>
 
