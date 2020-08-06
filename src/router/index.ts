@@ -5,7 +5,7 @@ import Home from "@/views/Home.vue";
 import Labels from "@/views/Labels.vue";
 import NotFound from "@/views/NotFound.vue";
 import Statistics from "@/views/Statistics.vue";
-import EditLabel from "@/views/EditLable.vue";
+import EditLabel from "@/views/EditLabel.vue";
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
