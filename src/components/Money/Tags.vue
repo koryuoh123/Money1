@@ -5,7 +5,7 @@
     </div>
     <ul class="current">
       <li
-        v-for="tag in tags"
+        v-for="tag in tagList"
         :key="tag.id"
         @click="toggle(tag)"
         :class="{selected: selectedTags.indexOf(tag)>=0}"
@@ -17,12 +17,18 @@
 <script lang='ts'>
 import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
-import tagListModel from "@/models/tagListModel";
-import store from "@/store/index2.ts";
-@Component
+
+@Component({
+  computed:{
+    tagList(){
+      //TODO
+      // return this.$store.fetchTags()
+      return this.$store.state.tagList;
+    }
+  }
+})
 export default class Tags extends Vue {
-  // @Prop() readonly dataSource: string[] | undefined;
-  tags = store.tagList; //我自己修复了记账标签两个页面分别新建带来的信息不同步的bug
+  // tags = store.tagList; //我自己修复了记账标签两个页面分别新建带来的信息不同步的bug
   selectedTags: string[] = [];
 
   toggle(tag: string) {
@@ -41,8 +47,9 @@ export default class Tags extends Vue {
       window.alert("标签名不能为空");
     } else if (name === null) {
       return;
-    } else if (this.tags) {
-      store.createTag(name);
+    // } else if (this.tags) {
+      //TODO
+      // store.createTag(name);
     }
   }
 }
