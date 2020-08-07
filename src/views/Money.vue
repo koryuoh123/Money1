@@ -21,15 +21,13 @@ import Types from "@/components/Money/Types.vue";
 import NumberPad from "@/components/Money/NumberPad.vue";
 
 @Component({
-  components: { Tags, FormItem, Types, NumberPad },
-  computed: {
-    recordList() {
-      return this.$store.state.recordList;
-    }
-  }
+  components: { Tags, FormItem, Types, NumberPad }
 })
 export default class Money extends Vue {
-  //可能不需要了 tags = store.tagList;
+  get recordList() {
+    return this.$store.state.recordList;
+  }
+
   record: RecordItem = {
     tags: [],
     notes: "",
