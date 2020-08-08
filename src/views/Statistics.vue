@@ -9,18 +9,18 @@
 <script lang='ts'>
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
-import Types from "@/components/Money/Types.vue";
 import Tabs from "@/components/Tabs.vue";
-import intervalList from "@/constants/intervalList.ts"
-import recordTypeList from "@/constants/recordTypeList.ts"
+import intervalList from "@/constants/intervalList.ts";
+import recordTypeList from "@/constants/recordTypeList.ts";
 @Component({
-  components: { Types, Tabs }
+  components: {  Tabs }
 })
 export default class Statistic extends Vue {
   type = "-";
   interval = "day";
-    intervalList = intervalList;
-    recordTypeList = recordTypeList}
+  intervalList = intervalList;
+  recordTypeList = recordTypeList;
+}
 </script>
 
 <style lang="scss" scoped>
