@@ -2,7 +2,28 @@
   <Layout>
     <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type" />
     <Tabs classPrefix="item" :data-source="intervalList" :value.sync="interval" />
-    <div></div>
+    <ol>
+      <li v-for="(group,index) in result" :key="index">
+        <h3 class="title">{{group.title}}</h3>
+        <ol>
+          <li v-for="item in group.items" :key="item.id" class="record">
+            <span>{{tagString(item.tags)}}</span>
+            <span class="notes">{{item.notes}}</span>
+            <span>￥{{item.amount}}</span>
+          </li>
+        </ol>
+      </li>
+      <li v-for="(group,index) in result" :key="index">
+        <h3 class="title">{{group.title}}</h3>
+        <ol>
+          <li v-for="item in group.items" :key="item.id" class="record">
+            <span>{{tagString(item.tags)}}</span>
+            <span class="notes">{{item.notes}}</span>
+            <span>￥{{item.amount}}</span>
+          </li>
+        </ol>
+      </li>
+    </ol>
   </Layout>
 </template>
 
@@ -13,9 +34,29 @@ import Tabs from "@/components/Tabs.vue";
 import intervalList from "@/constants/intervalList.ts";
 import recordTypeList from "@/constants/recordTypeList.ts";
 @Component({
-  components: {  Tabs }
+  components: { Tabs }
 })
 export default class Statistic extends Vue {
+  tagString(tags: Tag[]) {
+    return tags.length === 0 ? "无" : tags.join(",");
+  }
+  get recordList() {
+    return (this.$store.state as RootState).recordList;
+  }
+  get result() {
+    const { recordList } = this;
+    type HashTableValue = { title: string; items: RecordList[] };
+    const hashTable: { [key: string]: HashTableValue } = {};
+    for (let i = 0; i < recordList.length; i++) {
+      const [date, time] = recordList[i].createdAt!.split("T");
+      hashTable[date] = hashTable[date] || { title: date, items: [] };
+      hashTable[date].items.push(recordList[i]);
+    }
+    return hashTable;
+  }
+  beforeCreate() {
+    this.$store.commit("fetchRecords");
+  }
   type = "-";
   interval = "day";
   intervalList = intervalList;
@@ -23,17 +64,40 @@ export default class Statistic extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
-::v-deep .type-tabs-item {
-  background: white;
-  &.selected {
-    background: #c4c4c4;
-    &::after {
-      display: none;
+<style lang="scss" >
+::v-deep {
+  .type-tabs-item {
+    background: white;
+    &.selected {
+      background: #c4c4c4;
+      &::after {
+        display: none;
+      }
     }
   }
-}
-  ::v-deep .interval-tabs-item {
+  .interval-tabs-item {
     height: 48px;
   }
+}
+%item {
+  padding: 8px 16px;
+  line-height: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+}
+.title {
+  @extend %item;
+}
+.record {
+  background: white;
+  @extend %item;
+}
+.notes {
+  margin-right: auto;
+  margin-left: 16px;
+  color: #999;
+}
+</style>
+<style lang="scss" scoped>
 </style>
