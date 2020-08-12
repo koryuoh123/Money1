@@ -6,7 +6,12 @@
       <span class="rightIcon"></span>
     </div>
     <div class="form-wrapper">
-      <FormItem :value="currentTag.name" @update:value="update" field-name="标签名" placeholder="请输入标签名" />
+      <FormItem
+        :value="currentTag.name"
+        @update:value="update"
+        field-name="标签名:"
+        placeholder="请输入标签名"
+      />
     </div>
     <div class="button-wrapper">
       <Button @click="remove">删除标签</Button>
@@ -28,7 +33,7 @@ export default class EditLabel extends Vue {
   }
   created() {
     const id = this.$route.params.id;
-    this.$store.commit("fetchTags")
+    this.$store.commit("fetchTags");
     this.$store.commit("setCurrentTag", id);
     if (!this.currentTag) {
       this.$router.replace("/404");
@@ -56,26 +61,32 @@ export default class EditLabel extends Vue {
 
 <style lang="scss" scoped>
 .navBar {
+  color:white;
   text-align: center;
-  font-size: 16px;
+  font-size: 20px;
   padding: 12px 16px;
-  background: white;
+  background: rgb(251,114,153);
   display: flex;
   align-items: center;
   justify-content: space-between;
-
+box-shadow: 0 0 3px rgba(0,0,0,0.25);
   > .leftIcon {
-    width: 24px;
-    height: 24px;
-  }
-  > .rightIcon {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
   }
 }
 .form-wrapper {
   background: white;
   margin-top: 8px;
+  ::v-deep .formItem {
+    font-size: 19px;
+    input {
+      max-width:70%;
+      margin-left: 5px;
+      margin-right: 5px;
+      border-bottom: 2px solid rgb(254,158,186);
+    }
+  }
 }
 .button-wrapper {
   text-align: center;

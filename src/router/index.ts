@@ -1,17 +1,17 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 import Money from "@/views/Money.vue";
-import Home from "@/views/Home.vue";
 import Labels from "@/views/Labels.vue";
 import NotFound from "@/views/NotFound.vue";
 import Statistics from "@/views/Statistics.vue";
 import EditLabel from "@/views/EditLabel.vue";
+import EditRecord from "@/views/EditRecord.vue";
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
     path: "/",
-    redirect: "/money",
+    redirect: "/statistics",
   },
   {
     path: "/money",
@@ -28,6 +28,10 @@ const routes: Array<RouteConfig> = [
   {
     path: "/labels/edit/:id",
     component: EditLabel,
+  },
+  {
+    path: "/statistics/edit/:id",
+    component: EditRecord,
   },
   {
     path: "*",

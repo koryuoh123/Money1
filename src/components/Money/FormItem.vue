@@ -1,23 +1,58 @@
 <template>
   <label class="formItem">
     <span class="name">{{this.fieldName}}</span>
-    <input :value="value" @input="onValueChange($event.target.value)" type="text" :placeholder="placeholder" />
+    <template v-if="type === 'date'">
+      <input
+        :type="type || 'text'"
+        :value="beautifyDate(value)"
+        @input="onValueChanged($event.target.value)"
+        :placeholder="this.placeholder"
+      />
+    </template>
+
+    <template v-else-if="type === 'checkbox'">
+      <select :value="value" @input="onValueChanged($event.target.value)">
+        <option v-for="item in typeList" :value="item.value" :key="item.value">{{item.text}}</option>
+      </select>
+    </template>
+
+    <template v-else>
+      <input
+        :type="type || 'text'"
+        :value="value"
+        @input="onValueChanged($event.target.value)"
+        :placeholder="this.placeholder"
+      />
+    </template>
   </label>
 </template>
 
 <script lang='ts'>
 import Vue from "vue";
-import { Component, Watch, Prop } from "vue-property-decorator";
-
+import { Component, Prop } from "vue-property-decorator";
+import dayjs from "dayjs";
 @Component
 export default class FormItem extends Vue {
-  @Prop({default:''})readonly value!: string;
+  @Prop({ default: "" }) readonly value!: string;
   @Prop({ required: true }) fieldName!: string;
   @Prop() placeholder?: string;
+  @Prop() type?: string;
+  @Prop() taglist!: Tag[];
 
- 
-  onValueChange(value: string) {
+  typeList = [
+    { text: "支出", value: "-" },
+    { text: "收入", value: "+" }
+  ];
+
+  onValueChanged(value: string) {
     this.$emit("update:value", value);
+  }
+  beautifyDate(isoString: string) {
+   
+    return dayjs(isoString).format("YYYY-MM-DD");
+  }
+  beautifyType(type: string) {
+    return this.typeList.filter(t => t.value === type).map(t => t.text)[0];
   }
 }
 </script>

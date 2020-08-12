@@ -1,6 +1,6 @@
 <template>
   <div class="numberPad">
-    <div class="output">{{output}}</div>
+    <div class="output">{{ output }}</div>
     <div class="buttons">
       <button @click="inputContent">1</button>
       <button @click="inputContent">2</button>
@@ -20,15 +20,20 @@
   </div>
 </template>
 
-<script lang='ts'>
+<script lang="ts">
 import Vue from "vue";
-import { Component, Prop } from "vue-property-decorator";
+import { Component, Prop, Watch } from "vue-property-decorator";
 
 @Component
 export default class NumberPad extends Vue {
-  @Prop() readonly value!: number;
-  output = this.value.toString();
+  @Prop({ default: 0, type: Number }) readonly value!: number;
+  @Prop(Boolean) readonly reset!: boolean;
+  @Watch("reset")
+  onFuckChange() {
+      this.output = "0";
+  }
 
+  output = this.value.toString();
   inputContent(event: MouseEvent) {
     const button = event.target as HTMLButtonElement; //强行声明是非空按钮元素
     const input = button.textContent;
@@ -53,18 +58,19 @@ export default class NumberPad extends Vue {
   clear() {
     this.output = "0";
   }
+
   ok() {
-    if (this.output === "0") {
+    if (this.output === "0" || this.output === "0.") {
       return;
     } else {
-      window.alert("已保存");
-      this.$emit("update:value", this.output);
-      this.$emit("submit", this.output);
-      this.output = "0";
+      const number = parseFloat(this.output);
+      this.$emit("update:value", number);
+      this.$emit("submit", number, this.output);
     }
   }
 }
 </script>
+
 
 <style lang="scss" scoped>
 @import "~@/assets/style/helper.scss";
@@ -77,6 +83,7 @@ export default class NumberPad extends Vue {
     padding: 9px 16px;
     text-align: right; //将100放到最右边
     height: 58px;
+    background: rgba(250, 240, 242, 0.651);
   }
   .buttons {
     @extend %clearFix;
@@ -86,7 +93,7 @@ export default class NumberPad extends Vue {
       float: left; //float定位配合OK按钮变大，0补上空隙，代替flex
       background: transparent;
       border: none;
-      $bg: #f2f2f2;
+      $bg: rgba(252, 232, 237, 0.651);
       &.ok {
         height: 64 * 2px; //我们想让ok自己变大点，但这会导致0换行了，这说明需要使用float定位代替flex
         float: right; //配合

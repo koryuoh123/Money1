@@ -3,7 +3,9 @@
     <div class="content" :class="classPrefix && `${classPrefix}-content`   ">
      <slot/>
     </div>
+    <div class="nav-wrapper">
     <Nav />
+    </div>
   </div>
 </template>
 
@@ -15,10 +17,24 @@
 </script>
 
 <style lang="scss" scoped>
+  ::v-deep nav{
+  position:fixed;
+  width:100%;
+  bottom:0px;
+  background:white;
+  
+  }
 .layout-wrapper {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+   min-height: 100vh;
+.nav-wrapper{
+  height:60px;
+  width:100%;
+  background:white;
+  
+  
+}
 }
 .content {
   

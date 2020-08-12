@@ -29,6 +29,7 @@
         box-shadow: 0 0 3px rgba(0,0,0,0.25);
         flex-direction: row;
         font-size: 12px;
+  
       > .item{
           padding:2px 0;
           width:33.33333%;
@@ -44,7 +45,7 @@
           margin-top:3px;
       }
       > .item.selected{
-          color:grey;
+          color:rgb(251, 114, 153);
       }
     }
 
