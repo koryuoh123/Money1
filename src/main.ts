@@ -8,7 +8,8 @@ import Layout from "@/components/Layout.vue";
 import Icon from "@/components/Icon.vue";
 import Add from "@/components/Add.vue"
 import Tabs from "@/components/Tabs.vue";
-
+import { Radio } from "ant-design-vue";
+Vue.use(Radio)
 Vue.config.productionTip = false;
 Vue.component("Nav", Nav);
 Vue.component("Layout", Layout);
