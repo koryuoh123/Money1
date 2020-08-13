@@ -1,23 +1,30 @@
 <template>
   <div>
     <Add />
-    <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type" />
-    <ol v-if="groupedList.length>0">
-      <li v-for="(group, index) in groupedList" :key="index">
-        <h3 class="title">
-          {{beautify(group.title)}}
-          <span>{{type+'￥'}}{{group.total}}</span>
-        </h3>
-        <ol>
-          <router-link v-for="item in group.items" :key="item.id" class="record" :to="`/statistics/edit/${item.ids}`" >
-            <span class="tag">{{tagString(item.tags)}}</span>
-            <span class="notes">{{item.notes}}</span>
-            <span class="amount">{{type+'￥'}}{{item.amounts}}</span>
-          </router-link>
-        </ol>
-      </li>
-    </ol>
-    <div v-else class="noResult">目前没有相关记录,快去添加一笔吧！！</div>
+    <div class="wrapper">
+      <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type" />
+      <ol v-if="groupedList.length>0">
+        <li v-for="(group, index) in groupedList" :key="index">
+          <h3 class="title">
+            {{beautify(group.title)}}
+            <span>{{type+'￥'}}{{group.total}}</span>
+          </h3>
+          <ol>
+            <router-link
+              v-for="item in group.items"
+              :key="item.id"
+              class="record"
+              :to="`/statistics/edit/${item.ids}`"
+            >
+              <span class="tag">{{tagString(item.tags)}}</span>
+              <span class="notes">{{item.notes}}</span>
+              <span class="amount">{{type+'￥'}}{{item.amounts}}</span>
+            </router-link>
+          </ol>
+        </li>
+      </ol>
+      <div v-else class="noResult">目前没有相关记录,快去添加一笔吧！！</div>
+    </div>
   </div>
 </template>
 
@@ -25,7 +32,6 @@
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import Tabs from "@/components/Tabs.vue";
-import intervalList from "@/constants/intervalList.ts";
 import recordTypeList from "@/constants/recordTypeList.ts";
 import dayjs from "dayjs";
 import clone from "@/lib/clone.ts";
@@ -60,9 +66,9 @@ export default class Statistic extends Vue {
     return (this.$store.state as RootState).recordList;
   }
   get groupedList() {
-    type Result = { title: string; total?: number; items: RecordItem[]}[];
+    type Result = { title: string; total?: number; items: RecordItem[] }[];
     const { recordList } = this;
-    
+
     if (recordList.length === 0) {
       return [];
     }
@@ -95,9 +101,9 @@ export default class Statistic extends Vue {
       }
     }
     result.map(group => {
-      
       group.total = group.items.reduce((sum, item) => {
         return sum + item.amounts;
+        
       }, 0);
     });
     return result;
@@ -105,12 +111,15 @@ export default class Statistic extends Vue {
   beforeCreate() {
     this.$store.commit("fetchRecords");
   }
-
 }
 </script>
 
 <style lang="scss" scoped>
 @import "~@/assets/style/helper.scss";
+.wrapper {
+  min-height: 100vh;
+  background: rgb(248, 246, 246);
+}
 .noResult {
   padding: 16px;
   text-align: center;
@@ -121,7 +130,7 @@ export default class Statistic extends Vue {
     background: white;
   }
   .type-tabs-item {
-    background: #f7f5f5;
+    background: white;
     &.selected {
       background: rgb(251, 114, 153);
       color: white;
@@ -144,6 +153,7 @@ export default class Statistic extends Vue {
   @extend %item;
   @extend %innerShadow;
   font-size: 19px;
+  background: rgb(248, 246, 246);
 }
 .record {
   background: white;

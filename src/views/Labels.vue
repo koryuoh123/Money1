@@ -1,5 +1,7 @@
 <template>
   <Layout>
+    <div class="wrapper">
+    
     <div class="navBar">
       <Icon @click="goBack" class="leftIcon" name="left" />
       <span class="title">标签列表</span>
@@ -13,6 +15,7 @@
     </div>
     <div class="createTag-wrapper">
       <Button class="createTag" @click="createTag">新建标签</Button>
+    </div>
     </div>
   </Layout>
 </template>
@@ -41,6 +44,10 @@ export default class Labels extends mixins(TagHelper) {
 </script>
 
 <style lang="scss" scoped>
+::v-deep .content{
+  
+   background: rgb(248, 246, 246);
+}
 .navBar {
   text-align: center;
   font-size: 20px;

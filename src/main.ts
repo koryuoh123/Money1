@@ -27,3 +27,8 @@ window.onload = function () {
     window.scrollTo(0, 9999);
   }, 0);
 };
+
+if(document.documentElement.clientWidth > 500){
+  window.alert('为了保证浏览效果，建议使用手机浏览')
+
+}

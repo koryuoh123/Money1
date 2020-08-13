@@ -1,7 +1,9 @@
 <template>
   <div id="x">
+    <div id = "y">
+<router-view />
+    </div>
     
-    <router-view ></router-view>
   </div>
 </template>
 <script>
@@ -19,6 +21,15 @@ body{
   font-family:$font-hei;
   font-size:16px;
   line-height: 1.5;
-  background: #f5f5f5;
+  background:#f5f5f5;
+}
+#x{
+  /* 限制PC上的宽度*/
+  max-width: 500px;
+  margin:0 auto;
+
+}
+#y{
+  background: white;
 }
 </style>

@@ -29,6 +29,7 @@
         box-shadow: 0 0 3px rgba(0,0,0,0.25);
         flex-direction: row;
         font-size: 12px;
+        max-width: 500px;
   
       > .item{
           padding:2px 0;

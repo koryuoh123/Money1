@@ -62,10 +62,17 @@ export default class EditRecord extends Vue {
     { text: "支出", value: "-" },
     { text: "收入", value: "+" },
   ];
+    created() {
+    this.$store.commit("fetchRecords");
+    if (!this.currentrecord) {
+      this.$router.replace("/404");
+    }
+  }
   get currentrecord() {
     this.$store.commit("setCurrentRecord", this.id);
     return this.$store.state.currentRecord;
   }
+
   select(value: string) {
     this.updateType(value);
   }
@@ -125,6 +132,9 @@ export default class EditRecord extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.form-wrapper{
+  background: rgb(245,245,245);
+}
 .formItem-wrapper {
   display: flex;
   flex-flow: column;
