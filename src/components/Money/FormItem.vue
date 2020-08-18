@@ -10,10 +10,13 @@
       />
     </template>
 
-    <template v-else-if="type === 'checkbox'">
-      <select :value="value" @input="onValueChanged($event.target.value)">
-        <option v-for="item in typeList" :value="item.value" :key="item.value">{{item.text}}</option>
-      </select>
+    <template v-else-if="type === 'number'">
+      <input
+        :type="type || 'number'"
+        :value="amount"
+        @input="onAmountChanged($event.target.value)"
+        :placeholder="this.placeholder"
+      />
     </template>
 
     <template v-else>
@@ -33,6 +36,7 @@ import { Component, Prop } from "vue-property-decorator";
 import dayjs from "dayjs";
 @Component
 export default class FormItem extends Vue {
+  @Prop({ default: 0 }) readonly amount!: number;
   @Prop({ default: "" }) readonly value!: string;
   @Prop({ required: true }) fieldName!: string;
   @Prop() placeholder?: string;
@@ -43,12 +47,14 @@ export default class FormItem extends Vue {
     { text: "支出", value: "-" },
     { text: "收入", value: "+" }
   ];
-
+  onAmountChanged(value: string) {
+    const number = parseFloat(value);
+    this.$emit("update:value", number);
+  }
   onValueChanged(value: string) {
     this.$emit("update:value", value);
   }
   beautifyDate(isoString: string) {
-   
     return dayjs(isoString).format("YYYY-MM-DD");
   }
   beautifyType(type: string) {

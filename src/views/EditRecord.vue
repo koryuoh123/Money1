@@ -31,8 +31,9 @@
         </div>
         <FormItem
           field-name="金额："
+          type="number"
           placeholder="请输入金额"
-          :value="amount"
+          :amount="amount"
           @update:value="updateAmount"
         />
         <FormItem
