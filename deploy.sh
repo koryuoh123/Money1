@@ -23,7 +23,7 @@ git commit -m 'deploy'
  #git push -f git@github.com:koryuoh123/Morney-website.git master:gh-pages
 #git push -f git@gitee.com:koryuoh/Morney-gitee.git master:gh-pages
 #git@gitee.com:koryuoh/Morney-test.git
-git push -f git@gitee.com:koryuoh/Morney.git master
+git push -u git@gitee.com:koryuoh/Morney.git master
 cd -
 
 #git remote set-url origin git@gitee.com:koryuoh/Morney-gitee.git
