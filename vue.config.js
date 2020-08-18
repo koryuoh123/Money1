@@ -2,14 +2,14 @@ const path = require("path");
 module.exports = {
   css: {
     loaderOptions: {
-        less: {
-          lessOptions:{
-            javascriptEnabled: true,
-          }
-        }
-    }
-},
-  lintOnSave: false,
+      less: {
+        lessOptions: {
+          javascriptEnabled: true,
+        },
+      },
+    },
+  },
+  publicPath: process.env.NODE_ENV === "production" ? "/Morney/" : "/",
   chainWebpack: (config) => {
     const dir = path.resolve(__dirname, "src/assets/icons");
     config.module

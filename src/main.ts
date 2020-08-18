@@ -29,6 +29,6 @@ window.onload = function () {
 };
 
 if(document.documentElement.clientWidth > 500){
-  window.alert('为了保证浏览效果，建议使用手机浏览')
+  window.alert('为了保证浏览效果，建议使用手机浏览。您也可以按F12进入开发者模式模拟手机环境')
 
 }
